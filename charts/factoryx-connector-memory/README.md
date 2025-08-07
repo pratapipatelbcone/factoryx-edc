@@ -1,9 +1,6 @@
 # factoryx-connector-memory
 
-
-
-
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square) 
+![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.1](https://img.shields.io/badge/AppVersion-0.1.1-informational?style=flat-square)
 
 A Helm chart for Factory-X Eclipse Data Space Connector based on memory. Please only use this for development or testing purposes, never in production workloads!
 
@@ -24,7 +21,6 @@ A Helm chart for Factory-X Eclipse Data Space Connector based on memory. Please 
   is out of scope of this document. But by default, Factory-X EDC expects to find the secret under `secret/client-secret`. The alias must be configured
   using the `iatp.sts.oauth.client.secret_alias` Helm value.
 
-
 ### Configure the chart
 
 Be sure to provide the following configuration entries to your Factory-X EDC Helm chart:
@@ -32,7 +28,6 @@ Be sure to provide the following configuration entries to your Factory-X EDC Hel
 - `iatp.sts.oauth.client.id`: the client ID of your tenant in DIM
 - `iatp.sts.oauth.client.secret_alias`: alias under which you saved your DIM client secret in the vault
 - `iatp.sts.dim.url`: the base URL for DIM
-
 
 ### Launching the application
 
@@ -42,18 +37,14 @@ Combined, run this shell command to start the in-memory Factory-X EDC runtime:
 
 ```shell
 helm repo add factoryx-dev https://factory-x-contributions.github.io/charts/dev
-helm install my-release factory-x-contributions/factoryx-connector-memory --version 0.1.0 \
+helm install my-release factory-x-contributions/factoryx-connector-memory --version 0.1.1 \
      -f <path-to>/tractusx-connector-memory-test.yaml \
      --set vault.secrets="client-secret:$YOUR_CLIENT_SECRET"
 ```
 
-
-
 ## Source Code
 
 * <https://github.com/factory-x-contributions/factoryx-edc/tree/main/charts/factoryx-connector-memory>
-
-
 
 ## Values
 
