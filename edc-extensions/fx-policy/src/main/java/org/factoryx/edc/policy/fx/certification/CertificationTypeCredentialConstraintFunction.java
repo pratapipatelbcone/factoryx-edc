@@ -44,7 +44,7 @@ public class CertificationTypeCredentialConstraintFunction<C extends Participant
     /**
      * key of the certification type constraint
      */
-    public static final String CERTIFICATION_LITERAL = "CertificationType";
+    public static final String CERTIFICATION_LITERAL = "Certification";
 
     /**
      * Claim key for certification type in the credential subject

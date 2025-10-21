@@ -63,7 +63,7 @@ public class CredentialFunctions {
 
     public static VerifiableCredential.Builder createCertificateTypeCredential(String certificationTypeClaim) {
         return VerifiableCredential.Builder.newInstance()
-                .types(List.of(FX_CREDENTIAL_NS + "VerifiableCredential", FX_CREDENTIAL_NS + "CertificateTypeCredential"))
+                .types(List.of(FX_CREDENTIAL_NS + "VerifiableCredential", FX_CREDENTIAL_NS + "CertificationCredential"))
                 .id(UUID.randomUUID().toString())
                 .issuer(new Issuer(UUID.randomUUID().toString(), Map.of("prop1", "val1")))
                 .expirationDate(Instant.now().plus(365, ChronoUnit.DAYS))
