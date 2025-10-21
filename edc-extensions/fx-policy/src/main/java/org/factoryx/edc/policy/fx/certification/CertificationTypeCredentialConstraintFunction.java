@@ -49,7 +49,7 @@ public class CertificationTypeCredentialConstraintFunction<C extends Participant
     /**
      * Claim key for certification type in the credential subject
      */
-    public static final String CERTIFICATE_TYPE_CLAIM = "certificationType";
+    public static final String CERTIFICATION_TYPE_CLAIM = "certificationType";
 
     /**
      * Evaluates the constraint's left-operand and right-operand against credentialSubject#certificationType
@@ -88,7 +88,7 @@ public class CertificationTypeCredentialConstraintFunction<C extends Participant
         }
         return credentialResult.getContent()
                 .stream()
-                .anyMatch(vc -> rightOperand.equals(vc.getCredentialSubject().get(0).getClaim(FX_POLICY_NS, CERTIFICATE_TYPE_CLAIM)));
+                .anyMatch(vc -> rightOperand.equals(vc.getCredentialSubject().get(0).getClaim(FX_POLICY_NS, CERTIFICATION_TYPE_CLAIM)));
     }
 
     /**
