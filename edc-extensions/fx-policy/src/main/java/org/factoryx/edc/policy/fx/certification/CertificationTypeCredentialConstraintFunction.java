@@ -1,5 +1,6 @@
-/*
+/********************************************************************************
  * Copyright (c) 2024 T-Systems International GmbH
+ * Copyright (c) 2025 SAP SE
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -15,7 +16,7 @@
  * under the License.
  *
  * SPDX-License-Identifier: Apache-2.0
- */
+ ********************************************************************************/
 
 package org.factoryx.edc.policy.fx.certification;
 
@@ -27,16 +28,14 @@ import org.eclipse.edc.policy.model.Permission;
 import org.factoryx.edc.edr.spi.CoreConstants;
 import org.factoryx.edc.policy.fx.common.AbstractDynamicCredentialConstraintFunction;
 
-import java.util.Arrays;
-
 import static org.factoryx.edc.edr.spi.CoreConstants.FX_POLICY_NS;
 
 /**
  * Enforces a Certification Agreement constraint.
  * <p>
- * This function can parse "MyCertificate" constraints.
+ * This function can parse credentialSubject#certificationType claim constraints.
  * <pre>
- *     MyCertificate EQ subtype[:version]
+ *     CertificateTypeClaim EQ subtype[:version]
  * </pre>
  * Either notation is converted into a set of predicates which are applied to the list of certificates. If the resulting filtered list is empty, the
  * policy is considered <strong>not fulfilled</strong>.
@@ -48,11 +47,16 @@ public class CertificationTypeCredentialConstraintFunction<C extends Participant
     public static final String CERTIFICATION_LITERAL = "CertificationType";
 
     /**
-     * Evaluates the constraint's left-operand and right-operand against a list of {@link CertificationType} objects.
+     * Claim key for certification type in the credential subject
+     */
+    public static final String CERTIFICATE_TYPE_CLAIM = "certificationType";
+
+    /**
+     * Evaluates the constraint's left-operand and right-operand against credentialSubject#certificationType
      *
      * @param leftValue  the left-side expression for the constraint. Must be either {@code https://w3id.org/factoryx/policy/}.
      * @param operator   the operation Must be {@link Operator#EQ} or {@link Operator#NEQ}
-     * @param rightValue the right-side expression for the constraint. Must be a string that is of type {@link CertificationType}.
+     * @param rightValue the right-side expression for the constraint. Must be a string that matches  credentialSubject#certificationType claim
      * @param rule       the rule associated with the constraint. Ignored by this function.
      * @param context    the policy context. Must contain the {@link ParticipantAgent}, which in turn must contain a list of {@link VerifiableCredential} stored
      *                   in its claims using the {@code "vc"} key.
@@ -66,7 +70,7 @@ public class CertificationTypeCredentialConstraintFunction<C extends Participant
         }
 
         // we support only string.
-        if (!(rightValue instanceof String)) {
+        if (!(rightValue instanceof String rightOperand)) {
             context.reportProblem("The right-operand must be of type String but was '%s'.".formatted(rightValue.getClass()));
             return false;
         }
@@ -77,14 +81,14 @@ public class CertificationTypeCredentialConstraintFunction<C extends Participant
             return false;
         }
 
-        var rightOperand = rightValue.toString();
-
-        if (!Arrays.stream(CertificationType.values()).map(Enum::name).toList().contains(rightOperand)) { // couldn't extract credential list from agent
-            context.reportProblem("Certification type '%s' is not of a defined type.".formatted(rightOperand));
+        var credentialResult = getCredentialList(participantAgent.getContent());
+        if (credentialResult.failed()) {
+            context.reportProblem(credentialResult.getFailureDetail());
             return false;
         }
-
-        return true;
+        return credentialResult.getContent()
+                .stream()
+                .anyMatch(vc -> rightOperand.equals(vc.getCredentialSubject().get(0).getClaim(FX_POLICY_NS, CERTIFICATE_TYPE_CLAIM)));
     }
 
     /**
@@ -94,6 +98,4 @@ public class CertificationTypeCredentialConstraintFunction<C extends Participant
     public boolean canHandle(Object leftValue) {
         return leftValue instanceof String && leftValue.toString().startsWith(FX_POLICY_NS + CERTIFICATION_LITERAL);
     }
-
-
 }

@@ -1,5 +1,6 @@
 /********************************************************************************
  * Copyright (c) 2024 Bayerische Motoren Werke Aktiengesellschaft (BMW AG)
+ * Copyright (c) 2025 SAP SE
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -57,6 +58,20 @@ public class CredentialFunctions {
                 .credentialSubject(CredentialSubject.Builder.newInstance()
                         .id("subject-id")
                         .claim("holderIdentifier", "did:web:holder")
+                        .build());
+    }
+
+    public static VerifiableCredential.Builder createCertificateTypeCredential(String certificationTypeClaim) {
+        return VerifiableCredential.Builder.newInstance()
+                .types(List.of(FX_CREDENTIAL_NS + "VerifiableCredential", FX_CREDENTIAL_NS + "CertificateTypeCredential"))
+                .id(UUID.randomUUID().toString())
+                .issuer(new Issuer(UUID.randomUUID().toString(), Map.of("prop1", "val1")))
+                .expirationDate(Instant.now().plus(365, ChronoUnit.DAYS))
+                .issuanceDate(Instant.now())
+                .credentialSubject(CredentialSubject.Builder.newInstance()
+                        .id("subject-id")
+                        .claim("holderIdentifier", "did:web:holder")
+                        .claim("certificationType", certificationTypeClaim)
                         .build());
     }
 }
