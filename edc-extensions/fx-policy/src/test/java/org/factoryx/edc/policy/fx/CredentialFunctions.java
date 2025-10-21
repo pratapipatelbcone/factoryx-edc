@@ -49,7 +49,7 @@ public class CredentialFunctions {
 
     public static VerifiableCredential.Builder createMembershipCredential() {
         return VerifiableCredential.Builder.newInstance()
-                .types(List.of(FX_CREDENTIAL_NS + "VerifiableCredential", FX_CREDENTIAL_NS + "MembershipCredential"))
+                .types(List.of(FX_CREDENTIAL_NS + "VerifiableCredential", FX_CREDENTIAL_NS + "FxMembershipCredential"))
                 .id(UUID.randomUUID().toString())
                 .issuer(new Issuer(UUID.randomUUID().toString(), Map.of("prop1", "val1")))
                 .expirationDate(Instant.now().plus(365, ChronoUnit.DAYS))
