@@ -39,12 +39,6 @@ import static org.factoryx.edc.edr.spi.CoreConstants.FX_POLICY_NS;
  */
 public class MembershipCredentialConstraintFunction<C extends ParticipantAgentPolicyContext> extends AbstractDynamicCredentialConstraintFunction<C> {
 
-    private final Monitor monitor;
-
-    public MembershipCredentialConstraintFunction(Monitor monitor) {
-        this.monitor = monitor;
-    }
-
     /**
      * key of the membership credential constraint
      *
@@ -57,6 +51,12 @@ public class MembershipCredentialConstraintFunction<C extends ParticipantAgentPo
      * key for fx-membership credential constraint
      */
     public static final String FX_MEMBERSHIP_LITERAL = "FxMembership";
+
+    private final Monitor monitor;
+
+    public MembershipCredentialConstraintFunction(Monitor monitor) {
+        this.monitor = monitor;
+    }
 
     @Override
     public boolean evaluate(Object leftOperand, Operator operator, Object rightOperand, Permission permission, C context) {
