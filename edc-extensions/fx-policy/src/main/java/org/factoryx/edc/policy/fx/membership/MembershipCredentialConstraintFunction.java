@@ -29,11 +29,8 @@ import org.eclipse.edc.spi.monitor.Monitor;
 import org.eclipse.tractusx.edc.core.utils.credentials.CredentialTypePredicate;
 import org.factoryx.edc.policy.fx.common.AbstractDynamicCredentialConstraintFunction;
 
-import java.util.stream.Stream;
-
 import static org.factoryx.edc.edr.spi.CoreConstants.FX_CREDENTIAL_NS;
 import static org.factoryx.edc.edr.spi.CoreConstants.FX_POLICY_NS;
-import static org.factoryx.edc.edr.spi.CoreConstants.FX_POLICY_NS_LEGACY;
 
 
 /**
@@ -41,10 +38,20 @@ import static org.factoryx.edc.edr.spi.CoreConstants.FX_POLICY_NS_LEGACY;
  * objects extracted from a {@link ParticipantAgent} which is expected to be present on the {@link ParticipantAgentPolicyContext}.
  */
 public class MembershipCredentialConstraintFunction<C extends ParticipantAgentPolicyContext> extends AbstractDynamicCredentialConstraintFunction<C> {
+
     /**
      * key of the membership credential constraint
+     *
+     * @deprecated Use {@value FX_MEMBERSHIP_LITERAL} instead.
      */
+    @Deprecated(since = "0.0.4", forRemoval = true)
     public static final String MEMBERSHIP_LITERAL = "Membership";
+
+    /**
+     * key for fx-membership credential constraint
+     */
+    public static final String FX_MEMBERSHIP_LITERAL = "FxMembership";
+
     private final Monitor monitor;
 
     public MembershipCredentialConstraintFunction(Monitor monitor) {
@@ -58,8 +65,9 @@ public class MembershipCredentialConstraintFunction<C extends ParticipantAgentPo
             return false;
         }
 
-        if ((FX_POLICY_NS_LEGACY + MEMBERSHIP_LITERAL).equals(leftOperand.toString())) {
-            monitor.warning("The FX Membership Policy uses an outdated context. Refer to the docs and update your offers.");
+        if ((FX_POLICY_NS + MEMBERSHIP_LITERAL).equals(leftOperand)) {
+            monitor.warning("The %s%s Policy is deprecated since version 0.0.4 and will be removed in future releases. Please use %s%s Policy instead."
+                    .formatted(FX_POLICY_NS, MEMBERSHIP_LITERAL, FX_POLICY_NS, FX_MEMBERSHIP_LITERAL));
         }
 
         // make sure the ParticipantAgent is there
@@ -76,12 +84,12 @@ public class MembershipCredentialConstraintFunction<C extends ParticipantAgentPo
         }
         return credentialResult.getContent()
                 .stream()
-                .anyMatch(new CredentialTypePredicate(FX_CREDENTIAL_NS, MEMBERSHIP_LITERAL + CREDENTIAL_LITERAL));
+                .anyMatch(new CredentialTypePredicate(FX_CREDENTIAL_NS, FX_MEMBERSHIP_LITERAL + CREDENTIAL_LITERAL)
+                        .or(new CredentialTypePredicate(FX_CREDENTIAL_NS, MEMBERSHIP_LITERAL + CREDENTIAL_LITERAL)));
     }
 
     @Override
     public boolean canHandle(Object leftOperand) {
-        return leftOperand instanceof String &&
-                Stream.of(FX_POLICY_NS + MEMBERSHIP_LITERAL, FX_POLICY_NS_LEGACY + MEMBERSHIP_LITERAL).anyMatch(l -> leftOperand.toString().equals(l));
+        return (FX_POLICY_NS + FX_MEMBERSHIP_LITERAL).equals(leftOperand) || (FX_POLICY_NS + MEMBERSHIP_LITERAL).equals(leftOperand);
     }
 }

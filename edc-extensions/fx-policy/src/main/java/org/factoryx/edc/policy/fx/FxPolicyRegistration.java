@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2024 T-Systems International GmbH
+ * Copyright (c) 2025 SAP SE
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -41,6 +42,7 @@ import static org.factoryx.edc.policy.fx.common.PolicyScopes.NEGOTIATION_SCOPE_C
 import static org.factoryx.edc.policy.fx.common.PolicyScopes.TRANSFER_PROCESS_REQUEST_SCOPE;
 import static org.factoryx.edc.policy.fx.common.PolicyScopes.TRANSFER_PROCESS_SCOPE;
 import static org.factoryx.edc.policy.fx.common.PolicyScopes.TRANSFER_PROCESS_SCOPE_CLASS;
+import static org.factoryx.edc.policy.fx.membership.MembershipCredentialConstraintFunction.FX_MEMBERSHIP_LITERAL;
 import static org.factoryx.edc.policy.fx.membership.MembershipCredentialConstraintFunction.MEMBERSHIP_LITERAL;
 
 /**
@@ -77,7 +79,7 @@ public class FxPolicyRegistration {
      */
     public static void registerBindings(RuleBindingRegistry registry) {
         registry.dynamicBind(s -> {
-            if (Stream.of(CERTIFICATION_LITERAL, MEMBERSHIP_LITERAL).anyMatch(postfix -> s.startsWith(FX_POLICY_NS + postfix))) {
+            if (Stream.of(CERTIFICATION_LITERAL, MEMBERSHIP_LITERAL, FX_MEMBERSHIP_LITERAL).anyMatch(postfix -> s.startsWith(FX_POLICY_NS + postfix))) {
                 return RULE_SCOPES;
             }
             return Set.of();
