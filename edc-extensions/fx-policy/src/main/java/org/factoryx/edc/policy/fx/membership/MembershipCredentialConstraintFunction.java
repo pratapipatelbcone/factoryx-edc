@@ -25,6 +25,7 @@ import org.eclipse.edc.participant.spi.ParticipantAgent;
 import org.eclipse.edc.participant.spi.ParticipantAgentPolicyContext;
 import org.eclipse.edc.policy.model.Operator;
 import org.eclipse.edc.policy.model.Permission;
+import org.eclipse.edc.spi.monitor.Monitor;
 import org.eclipse.tractusx.edc.core.utils.credentials.CredentialTypePredicate;
 import org.factoryx.edc.policy.fx.common.AbstractDynamicCredentialConstraintFunction;
 
@@ -37,8 +38,23 @@ import static org.factoryx.edc.edr.spi.CoreConstants.FX_POLICY_NS;
  * objects extracted from a {@link ParticipantAgent} which is expected to be present on the {@link ParticipantAgentPolicyContext}.
  */
 public class MembershipCredentialConstraintFunction<C extends ParticipantAgentPolicyContext> extends AbstractDynamicCredentialConstraintFunction<C> {
+
+    private final Monitor monitor;
+
+    public MembershipCredentialConstraintFunction(Monitor monitor) {
+        this.monitor = monitor;
+    }
+
     /**
      * key of the membership credential constraint
+     *
+     * @deprecated Use {@value FX_MEMBERSHIP_LITERAL} instead.
+     */
+    @Deprecated(since = "0.0.4", forRemoval = true)
+    public static final String MEMBERSHIP_LITERAL = "Membership";
+
+    /**
+     * key for fx-membership credential constraint
      */
     public static final String FX_MEMBERSHIP_LITERAL = "FxMembership";
 
@@ -47,6 +63,11 @@ public class MembershipCredentialConstraintFunction<C extends ParticipantAgentPo
         if (!ACTIVE.equals(rightOperand)) {
             context.reportProblem("Right-operand must be equal to '%s', but was '%s'".formatted(ACTIVE, rightOperand));
             return false;
+        }
+
+        if ((FX_POLICY_NS + MEMBERSHIP_LITERAL).equals(leftOperand)) {
+            monitor.warning("The %s%s Policy is deprecated since version 0.0.4 and will be removed in future releases. Please use %s%s Policy instead."
+                    .formatted(FX_POLICY_NS, MEMBERSHIP_LITERAL, FX_POLICY_NS, FX_MEMBERSHIP_LITERAL));
         }
 
         // make sure the ParticipantAgent is there
@@ -63,11 +84,12 @@ public class MembershipCredentialConstraintFunction<C extends ParticipantAgentPo
         }
         return credentialResult.getContent()
                 .stream()
-                .anyMatch(new CredentialTypePredicate(FX_CREDENTIAL_NS, FX_MEMBERSHIP_LITERAL + CREDENTIAL_LITERAL));
+                .anyMatch(new CredentialTypePredicate(FX_CREDENTIAL_NS, FX_MEMBERSHIP_LITERAL + CREDENTIAL_LITERAL)
+                        .or(new CredentialTypePredicate(FX_CREDENTIAL_NS, MEMBERSHIP_LITERAL + CREDENTIAL_LITERAL)));
     }
 
     @Override
     public boolean canHandle(Object leftOperand) {
-        return (FX_POLICY_NS + FX_MEMBERSHIP_LITERAL).equals(leftOperand);
+        return (FX_POLICY_NS + FX_MEMBERSHIP_LITERAL).equals(leftOperand) || (FX_POLICY_NS + MEMBERSHIP_LITERAL).equals(leftOperand);
     }
 }
