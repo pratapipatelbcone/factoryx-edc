@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2025 SAP SE
+ * Copyright (c) 2025 Cofinity-X GmbH
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -17,19 +17,16 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-package org.factoryx.edc.bdrs.client;
+package org.factoryx.edc.protocol.protocol.identifier;
 
-import org.eclipse.tractusx.edc.spi.identity.mapper.BdrsClient;
-import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
-class DidBasedBdrsCientExtensionTest {
-
-    DidBasedBdrsCientExtension extension = new DidBasedBdrsCientExtension();
-
-    @Test
-    void bdrsClient_returnsBdrsClientInstance() {
-        assertThat(extension.bdrsClient()).isInstanceOf(BdrsClient.class);
+public class DidExtractionFunctionTest extends MembershipCredentialIdExtractionFunctionTest {
+    @Override
+    protected MembershipCredentialIdExtractionFunction extractionFunction() {
+        return new DidExtractionFunction();
+    }
+    
+    @Override
+    protected String expectedId() {
+        return DID;
     }
 }

@@ -1,4 +1,5 @@
 /********************************************************************************
+ * Copyright (c) 2025 Cofinity-X GmbH
  * Copyright (c) 2025 SAP SE
  *
  * See the NOTICE file(s) distributed with this work for additional
@@ -17,24 +18,23 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-package org.factoryx.edc.bdrs.client;
+plugins {
+    `java-library`
+}
 
-import org.junit.jupiter.api.Test;
+dependencies {
+    implementation(project(":spi:core-spi"))
+    api(libs.edc.spi.core)
+    implementation(libs.eclipse.tractusx.coreutils)
+    implementation(libs.edc.ih.spi.credentials)
+    implementation(libs.edc.spi.identitytrust)
 
-import static org.assertj.core.api.Assertions.assertThat;
+    implementation(libs.dsp.spi.http)
+    implementation(libs.dsp.spi.v08)
+    implementation(libs.dsp.spi.v2025)
 
-class DidBasedBdrsCientTest {
+    implementation(libs.edc.spi.participant)
+    implementation(libs.edc.spi.protocol)
 
-    private static final String TEST_DID = "did:example:123";
-    private final DidBasedBdrsCient client = new DidBasedBdrsCient();
-
-    @Test
-    void resolveDid_returnsInputUnchanged() {
-        assertThat(client.resolveDid(TEST_DID)).isEqualTo(TEST_DID);
-    }
-
-    @Test
-    void resolveBpn_returnsInputUnchanged() {
-        assertThat(client.resolveBpn(TEST_DID)).isEqualTo(TEST_DID);
-    }
+    testImplementation(libs.edc.junit)
 }

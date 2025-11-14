@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2025 SAP SE
+ * Copyright (c) 2025 Cofinity-X GmbH
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -17,23 +17,30 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-package org.factoryx.edc.bdrs.client;
+package org.factoryx.edc.protocol.protocol.identifier;
 
-import org.eclipse.tractusx.edc.spi.identity.mapper.BdrsClient;
+import org.eclipse.edc.iam.verifiablecredentials.spi.model.CredentialSubject;
+import org.eclipse.edc.iam.verifiablecredentials.spi.model.VerifiableCredential;
+
+import java.util.Optional;
 
 /**
- * A BDRS client implementation that uses DIDs directly as BPNs and vice versa.
- * In factoryx-edc , the BPN and DID are identical, so no resolution is necessary.
+ * Extracts the DID (= credential subject id) from the MembershipCredential as the participant id.
+ * Used to handle id extraction for DSP 2025-1.
  */
-public class DidBasedBdrsCient implements BdrsClient {
-
+public class DidExtractionFunction extends MembershipCredentialIdExtractionFunction {
+    
+    private static final String IDENTITY_PROPERTY = "id";
+    
     @Override
-    public String resolveDid(String bpn) {
-        return bpn;
+    String identityProperty() {
+        return IDENTITY_PROPERTY;
     }
-
+    
     @Override
-    public String resolveBpn(String did) {
-        return did;
+    protected Optional<String> getIdentifier(VerifiableCredential vc) {
+        return vc.getCredentialSubject().stream()
+                .map(CredentialSubject::getId)
+                .findFirst();
     }
 }
