@@ -603,16 +603,10 @@ maven/mavencentral/org.eclipse.jetty/jetty-server/12.0.23, EPL-2.0 OR Apache-2.0
 maven/mavencentral/org.eclipse.jetty/jetty-session/12.0.23, EPL-2.0 OR Apache-2.0, approved, rt.jetty
 maven/mavencentral/org.eclipse.jetty/jetty-util/12.0.23, EPL-2.0 OR Apache-2.0, approved, rt.jetty
 maven/mavencentral/org.eclipse.parsson/parsson/1.1.7, EPL-2.0, approved, ee4j.parsson
-maven/mavencentral/org.eclipse.tractusx.edc/agreements-bpns/0.11.0, Apache-2.0, approved, automotive.tractusx
 maven/mavencentral/org.eclipse.tractusx.edc/agreements/0.11.0, Apache-2.0, approved, automotive.tractusx
-maven/mavencentral/org.eclipse.tractusx.edc/bdrs-client-spi/0.11.0, Apache-2.0, approved, automotive.tractusx
 maven/mavencentral/org.eclipse.tractusx.edc/bpn-validation-spi/0.11.0, Apache-2.0, approved, automotive.tractusx
-maven/mavencentral/org.eclipse.tractusx.edc/bpns-evaluation-core/0.11.0, Apache-2.0, approved, automotive.tractusx
-maven/mavencentral/org.eclipse.tractusx.edc/bpns-evaluation-spi/0.11.0, Apache-2.0, approved, automotive.tractusx
-maven/mavencentral/org.eclipse.tractusx.edc/bpns-evaluation-store-sql/0.11.0, Apache-2.0, approved, automotive.tractusx
 maven/mavencentral/org.eclipse.tractusx.edc/business-partner-store-sql/0.11.0, Apache-2.0, approved, automotive.tractusx
 maven/mavencentral/org.eclipse.tractusx.edc/callback-spi/0.11.0, Apache-2.0, approved, automotive.tractusx
-maven/mavencentral/org.eclipse.tractusx.edc/connector-discovery-api/0.11.0, Apache-2.0, approved, automotive.tractusx
 maven/mavencentral/org.eclipse.tractusx.edc/control-plane-migration/0.11.0, Apache-2.0, approved, automotive.tractusx
 maven/mavencentral/org.eclipse.tractusx.edc/core-spi/0.11.0, Apache-2.0, approved, automotive.tractusx
 maven/mavencentral/org.eclipse.tractusx.edc/core-utils/0.11.0, Apache-2.0, approved, automotive.tractusx
@@ -625,7 +619,6 @@ maven/mavencentral/org.eclipse.tractusx.edc/dataplane-proxy-http/0.11.0, Apache-
 maven/mavencentral/org.eclipse.tractusx.edc/dataplane-public-api-v2/0.11.0, Apache-2.0, approved, automotive.tractusx
 maven/mavencentral/org.eclipse.tractusx.edc/dataplane-selector-configuration/0.11.0, Apache-2.0, approved, automotive.tractusx
 maven/mavencentral/org.eclipse.tractusx.edc/dataplane-util/0.11.0, Apache-2.0, approved, automotive.tractusx
-maven/mavencentral/org.eclipse.tractusx.edc/dataspace-protocol/0.11.0, Apache-2.0, approved, automotive.tractusx
 maven/mavencentral/org.eclipse.tractusx.edc/edc-controlplane-base/0.11.0, Apache-2.0, approved, automotive.tractusx
 maven/mavencentral/org.eclipse.tractusx.edc/edc-controlplane-postgresql-hashicorp-vault/0.11.0, Apache-2.0, approved, automotive.tractusx
 maven/mavencentral/org.eclipse.tractusx.edc/edc-dataplane-base/0.11.0, Apache-2.0, approved, automotive.tractusx
@@ -645,7 +638,6 @@ maven/mavencentral/org.eclipse.tractusx.edc/log4j2-monitor/0.11.0, Apache-2.0, a
 maven/mavencentral/org.eclipse.tractusx.edc/non-finite-provider-push-core/0.11.0, Apache-2.0, approved, automotive.tractusx
 maven/mavencentral/org.eclipse.tractusx.edc/non-finite-provider-push-spi/0.11.0, Apache-2.0, approved, automotive.tractusx
 maven/mavencentral/org.eclipse.tractusx.edc/postgresql-migration-lib/0.11.0, Apache-2.0, approved, automotive.tractusx
-maven/mavencentral/org.eclipse.tractusx.edc/provision-additional-headers/0.11.0, Apache-2.0, approved, automotive.tractusx
 maven/mavencentral/org.eclipse.tractusx.edc/retirement-evaluation-api/0.11.0, Apache-2.0, approved, automotive.tractusx
 maven/mavencentral/org.eclipse.tractusx.edc/retirement-evaluation-core/0.11.0, Apache-2.0, approved, automotive.tractusx
 maven/mavencentral/org.eclipse.tractusx.edc/retirement-evaluation-spi/0.11.0, Apache-2.0, approved, automotive.tractusx
