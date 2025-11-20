@@ -34,6 +34,7 @@ dependencies {
         exclude("org.eclipse.tractusx.edc", "connector-discovery-api")
         exclude( "org.eclipse.tractusx.edc", "provision-additional-headers")
         exclude( "org.eclipse.tractusx.edc", "dataspace-protocol")
+        exclude("org.eclipse.tractusx.edc", "log4j2-monitor")
     }
 
     // fx-edc extensions
