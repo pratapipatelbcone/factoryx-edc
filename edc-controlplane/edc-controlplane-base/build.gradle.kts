@@ -48,4 +48,5 @@ dependencies {
     // needed for DCP integration
     runtimeOnly(project(":edc-extensions:dcp:fx-dcp"))
     runtimeOnly(project(":edc-extensions:did-validation"))
+    runtimeOnly(project(":edc-extensions:provision-additional-headers"))
 }
