@@ -19,7 +19,7 @@
 #  SPDX-License-Identifier: Apache-2.0
 #################################################################################
 
-FROM eclipse-temurin:23_37-jre-alpine
+FROM eclipse-temurin:24.0.2_12-jre-alpine
 ARG JAR
 ARG OTEL_JAR
 ARG ADDITIONAL_FILES
@@ -51,8 +51,6 @@ ENTRYPOINT ["java", \
      "-javaagent:/app/opentelemetry-javaagent.jar", \
      "-Dedc.fs.config=/app/configuration.properties", \
      "-Dotel.javaagent.configuration-file=/app/opentelemetry.properties", \
-     "-Dotel.metrics.exporter=prometheus", \
-     "-Dotel.exporter.prometheus.port=9090", \
      "-Djava.security.egd=file:/dev/urandom", \
      "-jar", \
      "edc-runtime.jar"]
